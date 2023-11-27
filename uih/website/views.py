@@ -6,6 +6,8 @@ from .forms import PatientForm
 from .models import Patient
 
 def home(request):
+    patients = Patient.objects.all()
+    
     # Check to see if logging in
     if request.method == 'POST':
         username = request.POST['username']
@@ -22,7 +24,7 @@ def home(request):
             messages.success(request, "There Was An Error Logging In, Please Try Again...")
             return redirect('home')
     else:
-        return render(request, 'home.html')
+        return render(request, 'home.html', {'patients': patients})
 
 def logout_user(request):
     logout(request)
@@ -56,3 +58,11 @@ def register_user(request):
         form = PatientForm()
         return render(request, 'register.html', {'form':form})
     return render(request, 'register.html', {'form':form})
+
+def user_record(request, pk):
+    if request.user.is_authenticated:
+        user_record = Patient.objects.get(ssn = pk)
+        return render(request, 'record.html', {'user_record':user_record})
+    else:
+        messages.success(request, "There Was An Error Logging In, Please Try Again...")
+        return redirect('home')
