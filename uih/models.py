@@ -140,9 +140,9 @@ class Nurse(models.Model):
 
 class Patient(models.Model):
     user = models.OneToOneField(User, verbose_name=_("patient"), on_delete=models.CASCADE)
-    fname = models.CharField(db_column='Fname', max_length=45)  # Field name made lowercase.
+    # fname = models.CharField(db_column='Fname', max_length=45)  # Field name made lowercase.
     mi = models.CharField(db_column='MI', max_length=5)  # Field name made lowercase.
-    lname = models.CharField(db_column='Lname', max_length=45)  # Field name made lowercase.
+    # lname = models.CharField(db_column='Lname', max_length=45)  # Field name made lowercase.
     ssn = models.CharField(db_column='SSN', primary_key=True, max_length=15)  # Field name made lowercase.
     age = models.IntegerField(db_column='Age')  # Field name made lowercase.
     gender = models.CharField(db_column='Gender', max_length=15)  # Field name made lowercase.
@@ -151,13 +151,33 @@ class Patient(models.Model):
     medical_history_description = models.TextField(db_column='Medical_History_Description')  # Field name made lowercase.
     phone_field = models.CharField(db_column='Phone#', max_length=25)  # Field name made lowercase. Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
     address = models.TextField(db_column='Address')  # Field name made lowercase.
-    username = models.CharField(db_column='Username', max_length=45)  # Field name made lowercase.
-    password = models.CharField(db_column='Password', max_length=45)  # Field name made lowercase.
+    # username = models.CharField(db_column='Username', max_length=45)  # Field name made lowercase.
+    # password = models.CharField(db_column='Password', max_length=45)  # Field name made lowercase.
 
     class Meta:
         # managed = False
         db_table = 'patient'
 
+# Copy of original in case
+# class Patient(models.Model):
+#     user = models.OneToOneField(User, verbose_name=_("patient"), on_delete=models.CASCADE)
+#     fname = models.CharField(db_column='Fname', max_length=45)  # Field name made lowercase.
+#     mi = models.CharField(db_column='MI', max_length=5)  # Field name made lowercase.
+#     lname = models.CharField(db_column='Lname', max_length=45)  # Field name made lowercase.
+#     ssn = models.CharField(db_column='SSN', primary_key=True, max_length=15)  # Field name made lowercase.
+#     age = models.IntegerField(db_column='Age')  # Field name made lowercase.
+#     gender = models.CharField(db_column='Gender', max_length=15)  # Field name made lowercase.
+#     race = models.CharField(db_column='Race', max_length=45)  # Field name made lowercase.
+#     occupation_class = models.CharField(db_column='Occupation_Class', max_length=100)  # Field name made lowercase.
+#     medical_history_description = models.TextField(db_column='Medical_History_Description')  # Field name made lowercase.
+#     phone_field = models.CharField(db_column='Phone#', max_length=25)  # Field name made lowercase. Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
+#     address = models.TextField(db_column='Address')  # Field name made lowercase.
+#     username = models.CharField(db_column='Username', max_length=45)  # Field name made lowercase.
+#     password = models.CharField(db_column='Password', max_length=45)  # Field name made lowercase.
+
+#     class Meta:
+#         # managed = False
+#         db_table = 'patient'
 
 class NurseSchedules(models.Model):
     schedule_id = models.CharField(db_column='Schedule_ID', primary_key=True, max_length=45)  # Field name made lowercase.

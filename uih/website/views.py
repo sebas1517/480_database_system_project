@@ -4,21 +4,23 @@ from django.contrib import messages
 from .forms import PatientForm
 
 def home(request):
-	# Check to see if logging in
-	if request.method == 'POST':
-		username = request.POST['username']
-		password = request.POST['password']
+    # Check to see if logging in
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        userRole = request.POST['role']
 
-		user = authenticate(request, username=username, password=password)
-		if user is not None:
-			login(request, user)
-			messages.success(request, "You have heen logged in!")
-			return redirect('home')
-		else:
-			messages.success(request, "There Was An Error Logging In, Please Try Again...")
-			return redirect('home')
-	else:
-		return render(request, 'home.html')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+
+            messages.success(request, "You have heen logged in! You are a " + userRole)
+            return redirect('home')
+        else:
+            messages.success(request, "There Was An Error Logging In, Please Try Again...")
+            return redirect('home')
+    else:
+        return render(request, 'home.html')
 
 def logout_user(request):
     logout(request)
