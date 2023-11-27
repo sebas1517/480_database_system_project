@@ -1,5 +1,7 @@
 # 480_database_system_project
 
+References: https://www.youtube.com/watch?v=t10QcFx7d5k
+
 # Startup page
 Login page has select option for: admin/nurse/patient
 
