@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.models import User
 from .forms import PatientForm
+from .models import Patient
 
 def home(request):
     # Check to see if logging in
@@ -34,6 +36,18 @@ def register_user(request):
             form.save()
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
+            mi = form.cleaned_data['mi']
+            age = form.cleaned_data['age']
+            race = form.cleaned_data['race']
+            occupation_class = form.cleaned_data['occupation_class']
+            phone_field = form.cleaned_data['phone_field']
+            address = form.cleaned_data['address']
+            ssn = form.cleaned_data['ssn']
+            gender = form.cleaned_data['gender']
+            user = User.objects.get(username=username)
+            patient = Patient.objects.create(user=user, mi=mi, age=age, race=race, occupation_class=occupation_class, phone_field=phone_field, address=address, ssn=ssn, gender=gender)
+            patient.save()  
+
             user = authenticate(username=username, password=password)
             login(request, user)
             messages.success(request, "You are registered.")
