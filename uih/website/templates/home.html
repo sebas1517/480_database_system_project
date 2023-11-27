@@ -4,6 +4,11 @@
 
 <div class ="col-md-6 offset-md-3">
 
+{% if user.is_authenticated %}
+<h1>Hello World!</h1>
+
+{%else%}
+
 <h1>Login</h1>
 <br/>
 
@@ -12,12 +17,12 @@
     <form>
         <div class="mb-3">
           
-          <input type="text" class="form-control" name='Username' placeholder='Username'>
+          <input type="text" class="form-control" name='Username' placeholder='Username' required>
           
         </div>
         <div class="mb-3">
  
-          <input type="password" class="form-control" name='Password' placeholder='Password'>
+          <input type="password" class="form-control" name='Password' placeholder='Password' required>
         </div>
 
         <button type="submit" class="btn btn-primary">Login</button>
@@ -26,5 +31,6 @@
 </form>
 
 </div>
+{%endif%}
 
 {% endblock%}
