@@ -3,10 +3,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import PatientForm
-from .models import Patient
+from .models import Patient, TimeSlot
 
 def home(request):
     patients = Patient.objects.all()
+    timeslots = TimeSlot.objects.all()
     
     # Check to see if logging in
     if request.method == 'POST':
@@ -24,7 +25,7 @@ def home(request):
             messages.success(request, "There Was An Error Logging In, Please Try Again...")
             return redirect('home')
     else:
-        return render(request, 'home.html', {'patients': patients})
+        return render(request, 'home.html', {'patients': patients,'timeslots': timeslots})
 
 def logout_user(request):
     logout(request)
@@ -66,3 +67,6 @@ def user_record(request, pk):
     else:
         messages.success(request, "There Was An Error Logging In, Please Try Again...")
         return redirect('home')
+
+def schedule_vaccination(request):
+    return render(request, 'record.html',{})

@@ -182,7 +182,6 @@ class TimeSlot(models.Model):
     num_nurses = models.CharField(db_column='Num_nurses', max_length=45)  # Field name made lowercase.
 
     class Meta:
-        managed = False
         db_table = 'time_slot'
 
 
