@@ -10,7 +10,7 @@ class PatientForm(UserCreationForm):
     ssn = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'SSN'}),max_length=45)
     race = forms.CharField( widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Race'}),max_length=45)
     age = forms.IntegerField()
-    gender = forms.CharField()
+    gender = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Gender'}),max_length=45)
     occupation_class = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Occupation'}),max_length=45)
     phone_field = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone Number'}),max_length=45)
     address = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Address'}),max_length=100)
@@ -34,7 +34,3 @@ class PatientForm(UserCreationForm):
         self.fields['password1'].widget.attrs['class'] = 'form-control'
         self.fields['password1'].widget.attrs['placeholder'] = 'Password'
         self.fields['password1'].label = ''
-
-        # self.fields['password2'].widget.attrs['class'] = 'form-control'
-        # self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
-        # self.fields['password2'].label = ''

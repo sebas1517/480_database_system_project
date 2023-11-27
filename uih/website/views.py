@@ -45,7 +45,7 @@ def register_user(request):
             ssn = form.cleaned_data['ssn']
             gender = form.cleaned_data['gender']
             user = User.objects.get(username=username)
-            patient = Patient.objects.create(user=user, mi=mi, age=age, race=race, occupation_class=occupation_class, phone_field=phone_field, address=address, ssn=ssn, gender=gender)
+            patient = Patient.objects.create(user=user, fname= user.first_name, lname=user.last_name, mi=mi, age=age, race=race, occupation_class=occupation_class, phone_field=phone_field, address=address, ssn=ssn, gender=gender)
             patient.save()  
 
             user = authenticate(username=username, password=password)
