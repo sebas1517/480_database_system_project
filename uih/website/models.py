@@ -14,6 +14,9 @@ class Nurse(models.Model):
     username = models.CharField(db_column='Username', max_length=45)  # Field name made lowercase.
     password = models.CharField(db_column='Password', max_length=45)  # Field name made lowercase.
 
+    def __str__(self):
+        return self.fname + " " + self.mi + ". " + self.lname
+
     class Meta:
         managed = False
         db_table = 'nurse'
@@ -34,6 +37,9 @@ class Patient(models.Model):
     username = models.CharField(db_column='Username', max_length=45)  # Field name made lowercase.
     password = models.CharField(db_column='Password', max_length=45)  # Field name made lowercase.
 
+    def __str__(self):
+        return self.fname + " " + self.mi + ". " + self.lname
+
     class Meta:
         managed = False
         db_table = 'patient'
@@ -45,6 +51,9 @@ class NurseSchedules(models.Model):
     time_slot = models.DateTimeField(db_column='Time_slot')  # Field name made lowercase.
     num_patients = models.IntegerField(db_column='Num_patients')  # Field name made lowercase.
 
+    def __str__(self):
+        return self.schedule_id
+
     class Meta:
         managed = False
         db_table = 'nurse_schedules'
@@ -55,6 +64,9 @@ class TimeSlot(models.Model):
     time = models.DateTimeField(primary_key=True)
     num_patients = models.CharField(db_column='Num_patients', max_length=45)  # Field name made lowercase.
     num_nurses = models.CharField(db_column='Num_nurses', max_length=45)  # Field name made lowercase.
+
+    def __str__(self):
+        return self.time
 
     class Meta:
         managed = False
@@ -69,6 +81,9 @@ class VaccinationRecord(models.Model):
     vaccine = models.CharField(db_column='Vaccine', max_length=50)  # Field name made lowercase.
     dosage = models.IntegerField(db_column='Dosage')  # Field name made lowercase.
 
+    def __str__(self):
+        return self.record_id
+
     class Meta:
         managed = False
         db_table = 'vaccination_record'
@@ -81,6 +96,9 @@ class Vaccine(models.Model):
     description = models.TextField(db_column='Description', blank=True, null=True)  # Field name made lowercase.
     amount_available = models.IntegerField(db_column='Amount_Available')  # Field name made lowercase.
     on_hold = models.IntegerField(db_column='On_Hold')  # Field name made lowercase.
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         managed = False
