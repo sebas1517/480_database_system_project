@@ -5,7 +5,7 @@
 #   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
-from django.db import models
+from django.db import models, User
 
 
 class AuthGroup(models.Model):
@@ -138,19 +138,8 @@ class Nurse(models.Model):
         managed = False
         db_table = 'nurse'
 
-
-class NurseSchedules(models.Model):
-    schedule_id = models.CharField(db_column='Schedule_ID', primary_key=True, max_length=45)  # Field name made lowercase.
-    nurse_id = models.CharField(db_column='Nurse_ID', max_length=45)  # Field name made lowercase.
-    time_slot = models.DateTimeField(db_column='Time_slot')  # Field name made lowercase.
-    num_patients = models.IntegerField(db_column='Num_patients')  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'nurse_schedules'
-
-
 class Patient(models.Model):
+    user = models.OneToOneField(User, verbose_name=_("patient"), on_delete=models.CASCADE)
     fname = models.CharField(db_column='Fname', max_length=45)  # Field name made lowercase.
     mi = models.CharField(db_column='MI', max_length=5)  # Field name made lowercase.
     lname = models.CharField(db_column='Lname', max_length=45)  # Field name made lowercase.
@@ -166,8 +155,20 @@ class Patient(models.Model):
     password = models.CharField(db_column='Password', max_length=45)  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'patient'
+
+
+class NurseSchedules(models.Model):
+    schedule_id = models.CharField(db_column='Schedule_ID', primary_key=True, max_length=45)  # Field name made lowercase.
+    nurse_id = models.CharField(db_column='Nurse_ID', max_length=45)  # Field name made lowercase.
+    time_slot = models.DateTimeField(db_column='Time_slot')  # Field name made lowercase.
+    num_patients = models.IntegerField(db_column='Num_patients')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'nurse_schedules'
+
 
 
 class TimeSlot(models.Model):
