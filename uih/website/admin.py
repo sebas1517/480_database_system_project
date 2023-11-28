@@ -8,6 +8,8 @@ from .models import Vaccine
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 admin.site.unregister(Group)
 #admin.site.unregister(User)
@@ -24,14 +26,25 @@ class PatientAdmin(admin.ModelAdmin):
 @admin.register(Nurse)
 class NurseAdmin(admin.ModelAdmin):
     
-    # user = User.objects.create_user(username=Nurse.username, first_name=Nurse.fname, last_name=Nurse.lname)
+    # user = User.objects.create_user(username=str(Nurse.username), first_name=str(Nurse.fname), last_name=str(Nurse.lname), password=str(Nurse.password))
     # password = user.set_password(str(Nurse.password))
     # password = make_password(Nurse.password)
 
-    user = authenticate(username=Nurse.username, password=str(Nurse.password))
+    # user = authenticate(username=Nurse.username, password=str(Nurse.password))
     # user.save()
     ordering = ('fname',)
     search_fields = ('fname',)
+
+@receiver(post_save, sender=Nurse)
+def user_saved(sender, instance, **kwargs):
+    # post_save.disconnect(user_saved, sender=sender)
+    user = User.objects.create_user(username=str(instance.username), first_name=str(instance.fname), last_name=str(instance.lname), password=str(instance.password))
+
+    user.save()
+    # instance.id = user.id
+    # instance.save()
+    # post_save.connect(user_saved, sender=sender)
+    Nurse.objects.filter(username=instance.username).update(user=user)
 
 #admin.site.register(NurseSchedules)
 @admin.register(NurseSchedules)
