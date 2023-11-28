@@ -73,3 +73,9 @@ def schedule_vaccination(request):
     timeslots = TimeSlot.objects.all
         
     return render(request, 'schedule.html',{'timeslots':timeslots})
+
+def schedule_confirm(request,pk):
+    if request.user.is_authenticated:
+        slot = TimeSlot.objects.get(time=pk)
+    return render(request, 'schedule_confirm.html',{'slot':slot})
+

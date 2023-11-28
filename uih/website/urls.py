@@ -7,5 +7,6 @@ urlpatterns = [
     path('register/', views.register_user, name='register'),
     path('schedule/', views.schedule_vaccination, name='schedule'),
     path('record/<str:pk>', views.user_record, name='record'),
+    path('record/<int:pk>', views.schedule_confirm, name='schedule_confirm'),
     
 ]
