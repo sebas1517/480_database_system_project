@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from .models import Patient
-
+from .models import Nurse
 class PatientForm(UserCreationForm):
     first_name = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),max_length=45)
     last_name = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),max_length=45)
@@ -34,3 +34,8 @@ class PatientForm(UserCreationForm):
         self.fields['password1'].widget.attrs['class'] = 'form-control'
         self.fields['password1'].widget.attrs['placeholder'] = 'Password'
         self.fields['password1'].label = ''
+
+class NurseUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Nurse
+        fields = ['fname', 'mi', 'lname', 'gender', 'phone_field', 'address']

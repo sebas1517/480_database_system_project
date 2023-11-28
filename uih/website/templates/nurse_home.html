@@ -1,0 +1,8 @@
+{% extends 'index.html' %}
+
+{% block content %}
+  <h2>Welcome, Nurse {{ nurse.fname }}!</h2>
+  <!-- Add links and content specific to the nurse homepage -->
+  <p><a href="{% url 'update_nurse_info' nurse.employee_id %}">Update Info</a></p>
+  <!-- Add other nurse-specific content -->
+{% endblock %}
