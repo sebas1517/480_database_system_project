@@ -11,17 +11,18 @@
     <thead>
       <tr>
         <th scope="col">Timeslot</th>
-        <th scope="col">First</th>
       </tr>
     </thead>
     <tbody>
       
 {% if timeslots %}
     {% for timeslot in timeslots %}
+        {% if timeslot.num_nurses|stringformat:'s' < 12|stringformat:'s' %}
             <tr>
                 <td>{{timeslot}} </td>
 
             </tr>
+        {% endif %}
     {% endfor %}
 {% endif %}
     </tbody>
