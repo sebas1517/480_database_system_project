@@ -212,3 +212,12 @@ class Vaccine(models.Model):
     class Meta:
         managed = False
         db_table = 'vaccine'
+
+class PatientSchedule(models.Model):
+    id = models.IntegerField(db_column='ID', primary_key=True)
+    time_slot = models.DateTimeField(db_column='Time_slot')
+    patient_ssn = models.CharField(db_column='Patient_SSN', max_length=15)
+    vaccine = models.CharField(db_column='Vaccine', max_length=50)
+
+    class Meta:
+        db_table = 'patient_schedule'
