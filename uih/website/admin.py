@@ -38,13 +38,16 @@ class NurseAdmin(admin.ModelAdmin):
 @receiver(post_save, sender=Nurse)
 def user_saved(sender, instance, **kwargs):
     # post_save.disconnect(user_saved, sender=sender)
-    user = User.objects.create_user(username=str(instance.username), first_name=str(instance.fname), last_name=str(instance.lname), password=str(instance.password))
+    if User.objects.get(username=instance.username):
+        return
+    else:
+        user = User.objects.create_user(username=str(instance.username), first_name=str(instance.fname), last_name=str(instance.lname), password=str(instance.password))
 
-    user.save()
-    # instance.id = user.id
-    # instance.save()
-    # post_save.connect(user_saved, sender=sender)
-    Nurse.objects.filter(username=instance.username).update(user=user)
+        user.save()
+        # instance.id = user.id
+        # instance.save()
+        # post_save.connect(user_saved, sender=sender)
+        Nurse.objects.filter(username=instance.username).update(user=user)
 
 #admin.site.register(NurseSchedules)
 @admin.register(NurseSchedules)

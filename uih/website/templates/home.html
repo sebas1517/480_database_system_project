@@ -7,7 +7,7 @@
     {% if user.nurse %}
       <h2>Welcome, Nurse {{ user.nurse.fname }}!</h2>
       <!-- nurse links -->
-      <p><a href="{% url 'update_nurse_info' user.nurse.employee_id %}">Update Info</a></p>
+      <p><a href="{% url 'update_nurse_info'  %}">Update Info</a></p>
     {% elif user.patient %}
     <h2>Welcome, Patient {{ user.patient.fname }}!</h2>
     <table class="table table-striped table-hover">
