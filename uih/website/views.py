@@ -111,6 +111,10 @@ def add_schedule(request,pk):
             return redirect('home')
         return render(request, 'schedule_confirm.html',{'slot':slot})
 
+def nurse_home(request):
+    
+    return render(request, 'nurse_home.html')
+
 class NurseUpdateView(UpdateView):
     model = Nurseform_class = NurseUpdateForm
     form_class = NurseUpdateForm
