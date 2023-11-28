@@ -181,6 +181,9 @@ class TimeSlot(models.Model):
     num_patients = models.CharField(db_column='Num_patients', max_length=45)  # Field name made lowercase.
     num_nurses = models.CharField(db_column='Num_nurses', max_length=45)  # Field name made lowercase.
 
+    def __str__(self):
+        return (f"{self.time}")
+
     class Meta:
         db_table = 'time_slot'
 

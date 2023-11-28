@@ -7,7 +7,7 @@ from .models import Patient, TimeSlot
 
 def home(request):
     patients = Patient.objects.all()
-    timeslots = TimeSlot.objects.all()
+    # timeslots = TimeSlot.objects.all()
     
     # Check to see if logging in
     if request.method == 'POST':
@@ -25,7 +25,7 @@ def home(request):
             messages.success(request, "There Was An Error Logging In, Please Try Again...")
             return redirect('home')
     else:
-        return render(request, 'home.html', {'patients': patients,'timeslots': timeslots})
+        return render(request, 'home.html', {'patients': patients})
 
 def logout_user(request):
     logout(request)
@@ -69,4 +69,7 @@ def user_record(request, pk):
         return redirect('home')
 
 def schedule_vaccination(request):
-    return render(request, 'record.html',{})
+    # if request.user.is_authenticated:
+    timeslots = TimeSlot.objects.all
+        
+    return render(request, 'schedule.html',{'timeslots':timeslots})
