@@ -19,7 +19,7 @@
     {% for timeslot in timeslots %}
         {% if timeslot.num_nurses|stringformat:'s' < 12|stringformat:'s' %}
             <tr>
-                <td>{{timeslot}} </td>
+                <td><a href="{% url 'schedule_confirm' timeslot.id %}">{{timeslot}} </a></td>
 
             </tr>
         {% endif %}

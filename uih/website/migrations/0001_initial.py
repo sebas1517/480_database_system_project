@@ -169,18 +169,6 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='TimeSlot',
-            fields=[
-                ('time', models.DateTimeField(primary_key=True, serialize=False)),
-                ('num_patients', models.CharField(db_column='Num_patients', max_length=45)),
-                ('num_nurses', models.CharField(db_column='Num_nurses', max_length=45)),
-            ],
-            options={
-                'db_table': 'time_slot',
-                'managed': False,
-            },
-        ),
-        migrations.CreateModel(
             name='VaccinationRecord',
             fields=[
                 ('record_id', models.IntegerField(db_column='Record_ID', primary_key=True, serialize=False)),

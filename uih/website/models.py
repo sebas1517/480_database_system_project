@@ -177,7 +177,8 @@ class Patient(models.Model):
 
 
 class TimeSlot(models.Model):
-    time = models.DateTimeField(primary_key=True)
+    id = models.IntegerField(db_column='id', primary_key=True)
+    time = models.DateTimeField(db_column='time')
     num_patients = models.CharField(db_column='Num_patients', max_length=45)  # Field name made lowercase.
     num_nurses = models.CharField(db_column='Num_nurses', max_length=45)  # Field name made lowercase.
 
@@ -214,7 +215,7 @@ class Vaccine(models.Model):
         db_table = 'vaccine'
 
 class PatientSchedule(models.Model):
-    id = models.IntegerField(db_column='ID', primary_key=True)
+    id = models.IntegerField(db_column='id', primary_key=True)
     time_slot = models.DateTimeField(db_column='Time_slot')
     patient_ssn = models.CharField(db_column='Patient_SSN', max_length=15)
     vaccine = models.CharField(db_column='Vaccine', max_length=50)

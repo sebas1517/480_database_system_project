@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class ="col-md-6 offset-md-3">
+{% comment %}  {% endcomment %}
+<div class="card">
+    <div class="card-header"><strong>
+        <h1>Schedule Confirmation</h1></strong>
+    </div>
+<div class="card-body">
+
+<p class="card-text">
+    <h2>Would you like to schedule a vaccination appointment for {{slot}}?</h2></p>
+        
+
+<br/><br/>
+<a href="{% url 'schedule' %}" class="btn btn-danger">Back</a>
+
+<form method="POST" action="{% url 'add_schedule' slot.id %}">
+    {% csrf_token %} 
+{% comment %} <a href="{% url '' %}" class="btn btn-secondary">Schedule</a> {% endcomment %}
+<button type="submit"  class="btn btn-secondary">Schedule</button>
+</form>
+
+</div>
+{% endblock%}

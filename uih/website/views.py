@@ -10,7 +10,7 @@ from django.views import View
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import PatientForm
-from .models import Patient, TimeSlot, Nurse
+from .models import Patient, TimeSlot, Nurse, PatientSchedule
 
 def home(request):
     patients = Patient.objects.all()
@@ -92,8 +92,24 @@ def schedule_vaccination(request):
 
 def schedule_confirm(request,pk):
     if request.user.is_authenticated:
-        slot = TimeSlot.objects.get(time=pk)
-    return render(request, 'schedule_confirm.html',{'slot':slot})
+        slot = TimeSlot.objects.get(id=pk)
+
+        return render(request, 'schedule_confirm.html',{'slot':slot})
+    messages.success(request, "You must be logged in to schedule.")
+    return redirect('home')
+
+def add_schedule(request,pk):
+    if request.user.is_authenticated:
+        slot = TimeSlot.objects.get(id=pk)
+        if request.method == "POST":
+            # user = Us
+            patient = Patient.objects.get(user=request.user)
+            schedule = PatientSchedule.objects.create(time_slot=str(slot), patient_ssn=patient.ssn, id=pk)
+            schedule.save()
+
+            messages.success(request, "Vaccination Appointment scheduled!")
+            return redirect('home')
+        return render(request, 'schedule_confirm.html',{'slot':slot})
 
 class NurseUpdateView(UpdateView):
     model = Nurseform_class = NurseUpdateForm
