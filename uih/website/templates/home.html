@@ -3,8 +3,45 @@
 {% block content %}
 
 
-{% if user.is_authenticated %}
-<table class="table table-striped table-hover">
+  {% if user.is_authenticated %}
+    {% if user.nurse %}
+      <h2>Welcome, Nurse {{ user.nurse.fname }}!</h2>
+      <!-- nurse links -->
+      <p><a href="{% url 'update_nurse_info' user.nurse.employee_id %}">Update Info</a></p>
+    {% elif user.patient %}
+    <h2>Welcome, Patient {{ user.patient.fname }}!</h2>
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Address</th>
+          <th scope="col">Phone Number</th>
+          <th scope="col">Age</th>
+          <th scope="col">Gender</th>
+          <th scope="col">Race</th>
+          <th scope="col">SSN</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for patient in patients %}
+      <tr>
+        <td>{{ patient.fname }}
+        {{ patient.mi }}
+        {{ patient.lname }}</td>
+        <td>{{ patient.address}}</td>
+        <td>{{ patient.phone_field }}</td>
+        <td>{{ patient.age }}</td>
+        <td>{{ patient.gender }}</td>
+        <td>{{ patient.race }}</td>
+        <td><a href="{% url 'record' patient.ssn %}">{{ patient.ssn }}</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+    {% else %}
+      <!-- admin info -->
+    {% endif %}
+<!--<table class="table table-striped table-hover">
   <thead class="table-dark">
     <tr>
       <th scope="col">Name</th>
@@ -33,38 +70,30 @@
       {% endfor %}
     {% endif %}
   </tbody>
-</table>
+</table>-->
 
-{%else%}
-<div class ="col-md-6 offset-md-3">
-<h1>Login</h1>
-<br/>
-
-<form method="POST" action="{% url 'home' %}">
-    {% csrf_token %}
-    <form>
-
-        <ul>
+  {%else%}
+    <div class ="col-md-6 offset-md-3">
+      <h1>Login</h1>
+      <br/>
+      <form method="POST" action="{% url 'home' %}">
+        {% csrf_token %}
+        <form>
+          <ul>
             <li><input type="radio" name="role" value='patient'> Patient</li>
             <li><input type="radio" name="role" value='nurse'> Nurse</li>
             <li><input type="radio" name="role" value='admin'> Admin</li>
-        </ul>
-        <div class="mb-3">
-          
-          <input type="text" class="form-control" name="username", placeholder='Username' required>
-          
-        </div>
-        <div class="mb-3">
- 
-          <input type="password" class="form-control" name="password" placeholder='Password' required>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Login</button>
+          </ul>
+          <div class="mb-3">
+            <input type="text" class="form-control" name="username", placeholder='Username' required>
+          </div>
+          <div class="mb-3">
+            <input type="password" class="form-control" name="password" placeholder='Password' required>
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
       </form>
-
-</form>
-
-</div>
-{%endif%}
+    </div>
+  {%endif%}
 
 {% endblock%}

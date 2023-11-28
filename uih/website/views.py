@@ -1,31 +1,47 @@
+from typing import Any
+from django.db import models
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.views.generic.edit import UpdateView
+from django.urls import reverse_lazy
+from .forms import NurseUpdateForm
+
+from django.views import View
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import PatientForm
-from .models import Patient, TimeSlot
+from .models import Patient, TimeSlot, Nurse
 
 def home(request):
     patients = Patient.objects.all()
-    # timeslots = TimeSlot.objects.all()
-    
-    # Check to see if logging in
+    user = None  # Initialize user to None outside the if block
+
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        userRole = request.POST['role']
+        user_role = request.POST['role']
 
         user = authenticate(request, username=username, password=password)
+        
         if user is not None:
-            login(request, user)
-
-            messages.success(request, "You have heen logged in! You are a " + userRole)
-            return redirect('home')
+            if user_role == 'patient' and hasattr(user, 'patient'):
+                login(request, user)
+                messages.success(request, "You have been logged in! You are a patient.")
+                return redirect('home')
+            elif user_role == 'nurse' and hasattr(user, 'nurse'):
+                login(request, user)
+                messages.success(request, "You have been logged in! You are a nurse.")
+                return redirect('nurse_home')
+            elif user_role == 'admin' and user.is_staff and user.is_superuser:
+                login(request, user)
+                messages.success(request, "You have been logged in! You are an admin.")
+                return redirect('admin:index')  # Redirect to the Django admin index page
+            else:
+                messages.error(request, "Invalid role selected.")
         else:
-            messages.success(request, "There Was An Error Logging In, Please Try Again...")
-            return redirect('home')
-    else:
-        return render(request, 'home.html', {'patients': patients})
+            messages.error(request, "There was an error logging in. Please try again.")
+
+    return render(request, 'home.html', {'patients': patients})
 
 def logout_user(request):
     logout(request)
@@ -79,3 +95,18 @@ def schedule_confirm(request,pk):
         slot = TimeSlot.objects.get(time=pk)
     return render(request, 'schedule_confirm.html',{'slot':slot})
 
+class NurseUpdateView(UpdateView):
+    model = Nurseform_class = NurseUpdateForm
+    form_class = NurseUpdateForm
+    template_name = 'update_nurse_info.html'
+    success_url = reverse_lazy('nurse_schedule_view')
+    def get_object(self, queryset=None):
+        return Nurse.objects.get(employee_id=self.kwargs['nurse_id'])
+    
+class NurseHomeView(View):
+    template_name = 'nurse_home.html'
+
+    def get(self, request, *args, **kwargs):
+        # Get the logged-in nurse instance
+        nurse = Nurse.objects.get(user=request.user)
+        return render(request, self.template_name, {'nurse': nurse})
