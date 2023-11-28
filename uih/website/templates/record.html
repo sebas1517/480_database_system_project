@@ -1,6 +1,29 @@
 {% extends 'index.html' %}
 
 {% block content %}
-<h1>Customer Record:</h1>
-{{user_record}}
+<h2>Customer Record:</h2>
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Record ID</th>
+        <th scope="col">Date / Time</th>
+        <th scope="col">SSN</th>
+        <th scope="col">Nurse ID</th>
+        <th scope="col">Vaccine</th>
+        <th scope="col">Doses</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for user_record in user_records %}
+    <tr>
+      <td>{{ user_record.record_id }}</td>
+      <td>{{ user_record.time_slot}}</td>
+      <td>{{ user_record.patient_ssn }}</td>
+      <td>{{ user_record.nurse_id }}</td>
+      <td>{{ user_record.vaccine }}</td>
+      <td>{{ user_record.dosage }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {%endblock%}

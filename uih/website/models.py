@@ -123,7 +123,7 @@ class DjangoSession(models.Model):
 
 
 class Nurse(models.Model):
-    user = models.OneToOneField(User, verbose_name=("nurse"), on_delete=models.CASCADE,null=True, blank=True)
+    user = models.OneToOneField(User, verbose_name=("patient"), on_delete=models.CASCADE,null=True)
     fname = models.CharField(db_column='Fname', max_length=45)  # Field name made lowercase.
     mi = models.CharField(db_column='MI', max_length=5)  # Field name made lowercase.
     lname = models.CharField(db_column='Lname', max_length=45)  # Field name made lowercase.
@@ -197,6 +197,7 @@ class VaccinationRecord(models.Model):
     vaccine = models.CharField(db_column='Vaccine', max_length=50)  # Field name made lowercase.
     dosage = models.IntegerField(db_column='Dosage')  # Field name made lowercase.
 
+    
     class Meta:
         managed = False
         db_table = 'vaccination_record'

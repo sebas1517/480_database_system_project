@@ -23,19 +23,17 @@
         </tr>
       </thead>
       <tbody>
-      {% for patient in patients %}
       <tr>
-        <td>{{ patient.fname }}
-        {{ patient.mi }}
-        {{ patient.lname }}</td>
-        <td>{{ patient.address}}</td>
-        <td>{{ patient.phone_field }}</td>
-        <td>{{ patient.age }}</td>
-        <td>{{ patient.gender }}</td>
-        <td>{{ patient.race }}</td>
-        <td><a href="{% url 'record' patient.ssn %}">{{ patient.ssn }}</a></td>
+        <td>{{ user.patient.fname }}
+        {{ user.patient.mi }}
+        {{ user.patient.lname }}</td>
+        <td>{{ user.patient.address}}</td>
+        <td>{{ user.patient.phone_field }}</td>
+        <td>{{ user.patient.age }}</td>
+        <td>{{ user.patient.gender }}</td>
+        <td>{{ user.patient.race }}</td>
+        <td><a href="{% url 'record' user.patient.ssn %}">{{ user.patient.ssn }}</a></td>
       </tr>
-      {% endfor %}
     </tbody>
   </table>
     {% else %}
