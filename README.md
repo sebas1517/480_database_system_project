@@ -6,7 +6,7 @@ References: https://www.youtube.com/watch?v=t10QcFx7d5k
 Login page has select option for: admin/nurse/patient
 
 # Implementation Ideas
-Figure out what works best SQL/XAMPP(PHP)/Front-end(HTML) or SQL/DJango(Python)/Front-end(HTML)
+Using Django
 
 Front-end:
 layout webpage
