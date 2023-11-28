@@ -10,7 +10,7 @@ from django.views import View
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import PatientForm
-from .models import Patient, TimeSlot, Nurse, PatientSchedule
+from .models import Patient, TimeSlot, Nurse, PatientSchedule, VaccinationRecord
 
 def home(request):
     patients = Patient.objects.all()
@@ -78,8 +78,8 @@ def register_user(request):
 
 def user_record(request, pk):
     if request.user.is_authenticated:
-        user_record = Patient.objects.get(ssn = pk)
-        return render(request, 'record.html', {'user_record':user_record})
+        user_records = VaccinationRecord.objects.filter(patient_ssn = pk)
+        return render(request, 'record.html', {'user_records':user_records})
     else:
         messages.success(request, "There Was An Error Logging In, Please Try Again...")
         return redirect('home')
