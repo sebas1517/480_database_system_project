@@ -7,6 +7,7 @@ from .models import VaccinationRecord
 from .models import Vaccine
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
 admin.site.unregister(Group)
 #admin.site.unregister(User)
@@ -22,6 +23,13 @@ class PatientAdmin(admin.ModelAdmin):
 #admin.site.register(Nurse)
 @admin.register(Nurse)
 class NurseAdmin(admin.ModelAdmin):
+    
+    # user = User.objects.create_user(username=Nurse.username, first_name=Nurse.fname, last_name=Nurse.lname)
+    # password = user.set_password(str(Nurse.password))
+    # password = make_password(Nurse.password)
+
+    user = authenticate(username=Nurse.username, password=str(Nurse.password))
+    # user.save()
     ordering = ('fname',)
     search_fields = ('fname',)
 
